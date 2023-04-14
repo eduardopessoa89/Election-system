@@ -3,7 +3,7 @@ package com.teste.pautateste.controller;
 import com.teste.pautateste.dto.VoteDto;
 import com.teste.pautateste.model.Vote;
 import com.teste.pautateste.service.VoteService;
-import com.teste.pautateste.utils.BusinessException;
+import com.teste.pautateste.exception.BusinessException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

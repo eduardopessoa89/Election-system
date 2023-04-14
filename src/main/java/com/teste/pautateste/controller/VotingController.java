@@ -5,7 +5,7 @@ import com.teste.pautateste.dto.VotingDto;
 import com.teste.pautateste.dto.VotingResultDto;
 import com.teste.pautateste.model.Voting;
 import com.teste.pautateste.service.VotingService;
-import com.teste.pautateste.utils.BusinessException;
+import com.teste.pautateste.exception.BusinessException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -21,20 +21,12 @@ public class VotingController {
 
     @PostMapping("/start")
     public VotingDto startVoting(@Valid @RequestBody NewVotingDto newVotingDto) throws BusinessException {
-        try {
-            Voting voting = votingService.start(newVotingDto);
-            return convert(voting, VotingDto.class);
-        } catch (Error e) {
-            throw new BusinessException(e.getMessage());
-        }
+        Voting voting = votingService.start(newVotingDto);
+        return convert(voting, VotingDto.class);
     }
 
     @GetMapping("/{id}")
-    public VotingResultDto getVotingById(@PathVariable Integer id) throws BusinessException {
-        try {
-            return votingService.getVotingResult(id);
-        } catch (Error e) {
-            throw new BusinessException(e.getMessage());
-        }
+    public VotingResultDto getVotingById(@PathVariable Integer id) {
+        return votingService.getVotingResult(id);
     }
 }

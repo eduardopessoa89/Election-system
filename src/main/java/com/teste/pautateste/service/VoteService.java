@@ -4,7 +4,7 @@ import com.teste.pautateste.model.Vote;
 import com.teste.pautateste.model.VoteID;
 import com.teste.pautateste.model.Voting;
 import com.teste.pautateste.repository.VoteRepository;
-import com.teste.pautateste.utils.BusinessException;
+import com.teste.pautateste.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +20,13 @@ public class VoteService {
 
     public void validateVote(Vote vote) throws BusinessException {
         Voting voting = votingService.getVotingById(vote.getId().getVotingID());
-        if(voting.getFinished()) {
-            throw new BusinessException("Teste");
+        boolean userAlreadyVoted = !repository.findAllById(vote.getId()).isEmpty();
+        if(voting.isFinished()) {
+            throw new BusinessException("Voting Already end");
+        } else {
+            if(userAlreadyVoted) {
+                throw new BusinessException("User Already voted");
+            }
         }
     }
 

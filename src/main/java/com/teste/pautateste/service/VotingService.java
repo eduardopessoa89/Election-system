@@ -6,7 +6,7 @@ import com.teste.pautateste.dto.VotingResultDto;
 import com.teste.pautateste.model.Stave;
 import com.teste.pautateste.model.Voting;
 import com.teste.pautateste.repository.VotingRepository;
-import com.teste.pautateste.utils.BusinessException;
+import com.teste.pautateste.exception.BusinessException;
 import com.teste.pautateste.utils.FinishVotingTask;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
@@ -29,16 +29,19 @@ public class VotingService {
 
     private final ThreadPoolTaskScheduler scheduler;
 
-    public void validateInsert(Voting voting) {
-
+    public void validateInsert(NewVotingDto newVotingDto) throws BusinessException {
+        Boolean existsVoting = this.repository.existsVotingByStave_Id(newVotingDto.getStaveID());
+        if (existsVoting) {
+            throw new BusinessException("Voting already exists");
+        }
     }
 
-    public Voting start(NewVotingDto newVotingDto) {
+    public Voting start(NewVotingDto newVotingDto) throws BusinessException {
         Stave stave = staveService.getById(newVotingDto.getStaveID());
         Voting voting = Voting.builder()
                 .stave(stave)
                 .build();
-        this.validateInsert(voting);
+        this.validateInsert(newVotingDto);
         voting = repository.save(voting);
         this.scheduler.schedule(new FinishVotingTask(voting.getId(), this),
                 Instant.now().plus(newVotingDto.getDuration(), ChronoUnit.SECONDS));

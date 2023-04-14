@@ -1,6 +1,5 @@
 package com.teste.pautateste.service;
 
-import com.teste.pautateste.dto.UserDto;
 import com.teste.pautateste.model.User;
 import com.teste.pautateste.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,12 +20,7 @@ public class UserService {
         return list;
     }
 
-    public void validateInsert() {
-
-    }
-
     public User insert(User user) {
-        this.validateInsert();
         return repository.save(user);
     }
 

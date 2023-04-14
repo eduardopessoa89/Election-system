@@ -7,5 +7,5 @@ import lombok.Data;
 public class NewVotingDto {
     @NotNull(message = "Stave is mandatory")
     private Integer staveID;
-    private Integer duration = 1;
+    private Integer duration = 60;
 }

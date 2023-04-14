@@ -1,4 +1,4 @@
-package com.teste.pautateste.utils;
+package com.teste.pautateste.exception;
 
 public class BusinessException extends Exception {
 

@@ -24,7 +24,7 @@ public class Voting {
     private Stave stave;
 
     @Builder.Default
-    private Boolean finished = false;
+    private boolean finished = false;
 
     @Builder.Default
     private LocalDateTime startedAt = LocalDateTime.now();

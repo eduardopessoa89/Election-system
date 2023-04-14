@@ -2,6 +2,7 @@ package com.teste.pautateste.service;
 
 import com.teste.pautateste.model.Stave;
 import com.teste.pautateste.repository.StaveRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,14 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class StaveService {
 
     private final StaveRepository staveRepository;
-
-    @Autowired
-    public StaveService(StaveRepository staveRepository) {
-        this.staveRepository = staveRepository;
-    }
 
     public List<Stave> getAll() {
         Iterable<Stave> iterable = staveRepository.findAll();
